@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 x.run () {
   docker run --rm \
     -v "${PWD}:/local" \
@@ -14,7 +13,9 @@ x.validate () {
 }
 
 x.generate () {
-  x.run generate -g go-server -i "/local/greet.yaml"
+  x.run generate -g go-server -i "/local/greet.yaml" -o "/local/out"
+  local name="$(id -un)"
+  sudo chown -R "$name:$name" out
 }
 
 # --------------------- completion and delegation --------------------

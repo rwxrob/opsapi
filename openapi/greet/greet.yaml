@@ -1,0 +1,27 @@
+openapi: 3.0
+
+info:
+    version: 1.0.0
+    title: The Greet API
+    description: A Greet API
+
+servers:
+    - url: https://localhost/v1
+
+components:
+    securitySchemes:
+        BasicAuth:
+            type: http
+            scheme: basic
+
+security:
+    - BasicAuth: []
+
+paths:
+    /greeting:
+        get:
+            description: >-
+                Returns "Hello, :person"
+            responses:
+                '200':
+                    description: Successful response

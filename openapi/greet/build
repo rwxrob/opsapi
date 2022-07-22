@@ -1,19 +1,23 @@
 #!/bin/bash
 
+export GIT_USER_ID=rwxrob
+export GIT_REPO_ID=opsapi
+
 x.run () {
   docker run --rm \
     -v "${PWD}:/local" \
     -e GO_POST_PROCESS_FILE="/usr/bin/env gofmt -w" \
+    -e "GIT_USER_ID=$GIT_USER_ID" \
+    -e "GIT_REPO_ID=$GIT_REPO_ID" \
     openapitools/openapi-generator-cli "$@"
 }
-
 
 x.validate () {
   x.run validate -i "/local/greet.yaml"
 }
 
 x.generate () {
-  x.run generate -g go-server -i "/local/greet.yaml" -o "/local/out"
+  x.run generate -g go-gin-server -i "/local/petstore.yaml" -o "/local/out"
   local name="$(id -un)"
   sudo chown -R "$name:$name" out
 }

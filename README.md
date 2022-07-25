@@ -1,9 +1,18 @@
+# Operations REST API in OpenAPI 3.0
 
+This API is designed to facilitate common operations tasks by primarily
+depending on SSH for communications to target machines.
 
-OpenAPI Generator Considerations:
+## Build Dependencies
 
-* Generates from 3.0 (or less)
-* One-way (spec -> code)
-* Forces Go 1.13 (unless you change)
-* Uses deprecated libraries (`ioutil`)
-* Fails to follow Go style guidelines
+Anyone can build the API documentation and Go code from any major
+operating system so long as the following are installed. These are the
+only dependencies and no dependencies on anything requiring Docker or a
+specific OS will ever be added.
+
+* Bash 4+
+* Java JDK 8+
+* GNU `make` 3+
+* Go 1.18+
+* `curl`
+

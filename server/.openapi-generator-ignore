@@ -1,0 +1,6 @@
+Dockerfile
+go/api*
+go.mod
+go.work
+go.sum
+main.go

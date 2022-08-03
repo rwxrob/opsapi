@@ -7,11 +7,43 @@ export GENDIR=../
 export GO_POST_PROCESS_FILE="/usr/bin/env gofmt -w"
 export SPECFILE=../openapi.yaml
 
+
+# ----------------------------- functions ----------------------------
+
+# This function replaces a section of text in a file marked by the bash
+# regular expression passed as the first argument and ending with the
+# second argument with the text in the the third argument The beginning
+# and ending lines themselves are discarded when replaced.
+
+ssection () {
+  local beg="$1" end="$2" buf="$3"
+
+  [[ -z "$beg" || -z "$end" ]] && 
+    echo "usage: ${0##*/} BEGX ENDX [STRING]" && 
+    return 1
+
+  local in=no
+
+  while IFS= read -r line; do
+    if [[ "$line" =~ $beg ]]; then
+      in=yes
+      continue
+    fi
+    if [[ "$line" =~ $end ]]; then
+      in=no
+      printf "$buf"
+      continue
+    fi
+    [[ "$in" == no ]] && echo "$line"
+  done
+}
+
+# --------------------- tab completable commands ---------------------
+
 x.fetch.jar ()
 {
   local url="https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/$GENVERS/openapi-generator-cli-$GENVERS.jar"
-  echo "$url > openapi-generator-cli.jar"
-  curl -L "$url" -o openapi-generator-cli.jar
+  curl -L "$url"
 }
 
 x.check.deps ()
@@ -46,7 +78,7 @@ x.check.go ()
 {
   local vers
   vers=$(go version)
-  [[ "$vers" =~ ^[^\ ]+\ [^\ ]+\ go1\.([^\ ]+)\. ]] &&
+  [[ "$vers" =~ ^[^\ ]+\ [^\ ]+\ go1\.([^\ \.]+) ]] &&
     (( ${BASH_REMATCH[1]} >= 18 )) &&
     printf "%-20s ✅\n" "Go Version: ${BASH_REMATCH[1]}"
 }
@@ -85,11 +117,14 @@ x.validate ()
 x.server ()
 {
   x.run generate -g go-gin-server -i "$SPECFILE" -o "$GENDIR/server"
+  x.fixmainimport
 }
 
-x.client ()
+x.fixmainimport ()
 {
-  x.run generate -g go -i "$SPECFILE" -o "$GENDIR/client"
+  ssection 'WARNING' '\./go' "\tsw github.com/rwxrob/opsapi/go\n"  \
+    < "$GENDIR/server/main.go" > "$GENDIR/server/main.go~"
+  mv "$GENDIR/server/main.go~" "$GENDIR/server/main.go" 
 }
 
 # --------------------- completion and delegation --------------------

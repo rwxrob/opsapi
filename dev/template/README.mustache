@@ -1,6 +1,8 @@
-# Go API Server for openapi
+# Go API Server for {{packageName}}
 
-This is a sample server Petstore server. For this sample, you can use the api key `special-key` to test the authorization filters.
+{{#appDescriptionWithNewLines}}
+{{{.}}}
+{{/appDescriptionWithNewLines}}
 
 ## Overview
 
@@ -19,12 +21,12 @@ go run main.go
 
 To run the server in a docker container
 ```
-docker build --network=host -t openapi .
+docker build --network=host -t {{{packageName}}} .
 ```
 
 Once the image is built, just run
 ```
-docker run --rm -it openapi
+docker run --rm -it {{{packageName}}}
 ```
 
 ## Known Issue

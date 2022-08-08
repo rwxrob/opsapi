@@ -10,12 +10,11 @@
 package openapi
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+  "github.com/rwxrob/opsapi/internal/api"
 )
 
 // FakeDataFile - test data_file to ensure it's escaped correctly
 func FakeDataFile(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+  api.Handle(c, "FakeDataFile")
 }

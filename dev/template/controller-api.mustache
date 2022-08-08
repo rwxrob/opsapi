@@ -1,0 +1,16 @@
+{{>partial_header}}
+package {{packageName}}
+
+{{#operations}}
+import (
+	"github.com/gin-gonic/gin"
+  "github.com/rwxrob/opsapi/internal/api"
+){{#operation}}
+
+// {{nickname}} - {{{summary}}}
+{{#isDeprecated}}
+// Deprecated
+{{/isDeprecated}}
+func {{nickname}}(c *gin.Context) {
+  api.Handle(c, "{{nickname}}")
+}{{/operation}}{{/operations}}

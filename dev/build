@@ -3,40 +3,11 @@
 set -e
 
 export GENVERS=6.0.1
-export GENDIR=../
-export GO_POST_PROCESS_FILE="/usr/bin/env gofmt -w"
+export GO_POST_PROCESS_FILE="/usr/bin/env go fmt"
 export SPECFILE=../openapi.yaml
-
-
-# ----------------------------- functions ----------------------------
-
-# This function replaces a section of text in a file marked by the bash
-# regular expression passed as the first argument and ending with the
-# second argument with the text in the the third argument The beginning
-# and ending lines themselves are discarded when replaced.
-
-ssection () {
-  local beg="$1" end="$2" buf="$3"
-
-  [[ -z "$beg" || -z "$end" ]] && 
-    echo "usage: ${0##*/} BEGX ENDX [STRING]" && 
-    return 1
-
-  local in=no
-
-  while IFS= read -r line; do
-    if [[ "$line" =~ $beg ]]; then
-      in=yes
-      continue
-    fi
-    if [[ "$line" =~ $end ]]; then
-      in=no
-      printf "$buf"
-      continue
-    fi
-    [[ "$in" == no ]] && echo "$line"
-  done
-}
+export GENDIR="${0%/*}/../server"
+export TMPLDIR="${0%/*}/template"
+export INTERNAPI="${0%/*}/../server/internal/api"
 
 # --------------------- tab completable commands ---------------------
 
@@ -109,22 +80,40 @@ x.run ()
   java -jar openapi-generator-cli.jar "$@"
 }
 
-x.validate ()
-{
-  x.run validate -i "$SPECFILE"
-}
-
 x.server ()
 {
-  x.run generate -g go-gin-server -i "$SPECFILE" -o "$GENDIR/server"
-  x.fixmainimport
+  x.run generate -g go-gin-server -i "$SPECFILE" -o "$GENDIR" -t "$TMPLDIR"
+  x.init.api
+  x.addgomod
 }
 
-x.fixmainimport ()
+x.addgomod ()
 {
-  ssection 'WARNING' '\./go' "\tsw github.com/rwxrob/opsapi/go\n"  \
-    < "$GENDIR/server/main.go" > "$GENDIR/server/main.go~"
-  mv "$GENDIR/server/main.go~" "$GENDIR/server/main.go" 
+  cd "$GENDIR"
+  go mod init github.com/rwxrob/opsapi
+  go work init
+  go work use .
+  go get -u
+  printf "%s\n" go.work go.work.sum > .gitignore
+  cd -
+}
+
+x.init.api () {
+  [[ -d "$INTERNAPI" ]] && return 0
+  mkdir -p "$INTERNAPI"
+  cat <<END > "$INTERNAPI/api.go"
+package api
+
+import (
+	"log"
+
+	"github.com/gin-gonic/gin"
+)
+
+func Handle(c *gin.Context, op string) {
+	log.Println("would handle %v", op)
+}
+END
 }
 
 # --------------------- completion and delegation --------------------

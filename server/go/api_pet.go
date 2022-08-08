@@ -10,48 +10,47 @@
 package openapi
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+  "github.com/rwxrob/opsapi/internal/api"
 )
 
 // AddPet - Add a new pet to the store
 func AddPet(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+  api.Handle(c, "AddPet")
 }
 
 // DeletePet - Deletes a pet
 func DeletePet(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+  api.Handle(c, "DeletePet")
 }
 
 // FindPetsByStatus - Finds Pets by status
 func FindPetsByStatus(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+  api.Handle(c, "FindPetsByStatus")
 }
 
 // FindPetsByTags - Finds Pets by tags
 // Deprecated
 func FindPetsByTags(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+  api.Handle(c, "FindPetsByTags")
 }
 
 // GetPetById - Find pet by ID
 func GetPetById(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+  api.Handle(c, "GetPetById")
 }
 
 // UpdatePet - Update an existing pet
 func UpdatePet(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+  api.Handle(c, "UpdatePet")
 }
 
 // UpdatePetWithForm - Updates a pet in the store with form data
 func UpdatePetWithForm(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+  api.Handle(c, "UpdatePetWithForm")
 }
 
 // UploadFile - uploads an image
 func UploadFile(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{})
+  api.Handle(c, "UploadFile")
 }

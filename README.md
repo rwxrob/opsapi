@@ -1,4 +1,8 @@
-# Operations REST API in OpenAPI 3.0
+# OpenAPI 3.0 Code Generation Experiment
 
-This API is designed to facilitate common operations tasks by primarily
-depending on SSH for communications to target machines.
+This is just a working example of how to generate Go Gin server code
+using latest OpenAPI and OpenAPITools (which is java). Templates have
+been overridden in simple ways to update to the latest Go 1.18
+requirements and enable clean separation of all business logic for the
+API into the `internal/api` package --- specifically, the `api.Handle`
+function.

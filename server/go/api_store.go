@@ -11,25 +11,25 @@ package openapi
 
 import (
 	"github.com/gin-gonic/gin"
-  "github.com/rwxrob/opsapi/internal/api"
+	"github.com/rwxrob/opsapi/internal/api"
 )
 
 // DeleteOrder - Delete purchase order by ID
 func DeleteOrder(c *gin.Context) {
-  api.Handle(c, "DeleteOrder")
+	api.Handle(c, "DeleteOrder")
 }
 
 // GetInventory - Returns pet inventories by status
 func GetInventory(c *gin.Context) {
-  api.Handle(c, "GetInventory")
+	api.Handle(c, "GetInventory")
 }
 
 // GetOrderById - Find purchase order by ID
 func GetOrderById(c *gin.Context) {
-  api.Handle(c, "GetOrderById")
+	api.Handle(c, "GetOrderById")
 }
 
 // PlaceOrder - Place an order for a pet
 func PlaceOrder(c *gin.Context) {
-  api.Handle(c, "PlaceOrder")
+	api.Handle(c, "PlaceOrder")
 }

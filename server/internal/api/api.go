@@ -4,8 +4,10 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/rwxrob/opsapi/go/model"
 )
 
 func Handle(c *gin.Context, op string) {
-	log.Println("would handle %v", op)
+	u := model.User{}
+	log.Printf("would handle %v user %v", op, u)
 }

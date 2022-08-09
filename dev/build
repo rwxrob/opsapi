@@ -82,7 +82,10 @@ x.run ()
 
 x.server ()
 {
-  x.run generate -g go-gin-server -i "$SPECFILE" -o "$GENDIR" -t "$TMPLDIR"
+  x.run generate -g go-gin-server -i "$SPECFILE" -o "$GENDIR" -t "$TMPLDIR" \
+    --enable-post-process-file
+  mkdir "$GENDIR/go/model"
+  mv "$GENDIR"/go/model_* "$GENDIR/go/model"
   x.init.api
   x.addgomod
 }
@@ -111,7 +114,7 @@ import (
 )
 
 func Handle(c *gin.Context, op string) {
-	log.Println("would handle %v", op)
+	log.Printf("would handle %v", op)
 }
 END
 }

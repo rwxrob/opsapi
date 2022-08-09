@@ -11,45 +11,45 @@ package openapi
 
 import (
 	"github.com/gin-gonic/gin"
-  "github.com/rwxrob/opsapi/internal/api"
+	"github.com/rwxrob/opsapi/internal/api"
 )
 
 // CreateUser - Create user
 func CreateUser(c *gin.Context) {
-  api.Handle(c, "CreateUser")
+	api.Handle(c, "CreateUser")
 }
 
 // CreateUsersWithArrayInput - Creates list of users with given input array
 func CreateUsersWithArrayInput(c *gin.Context) {
-  api.Handle(c, "CreateUsersWithArrayInput")
+	api.Handle(c, "CreateUsersWithArrayInput")
 }
 
 // CreateUsersWithListInput - Creates list of users with given input array
 func CreateUsersWithListInput(c *gin.Context) {
-  api.Handle(c, "CreateUsersWithListInput")
+	api.Handle(c, "CreateUsersWithListInput")
 }
 
 // DeleteUser - Delete user
 func DeleteUser(c *gin.Context) {
-  api.Handle(c, "DeleteUser")
+	api.Handle(c, "DeleteUser")
 }
 
 // GetUserByName - Get user by user name
 func GetUserByName(c *gin.Context) {
-  api.Handle(c, "GetUserByName")
+	api.Handle(c, "GetUserByName")
 }
 
 // LoginUser - Logs user into the system
 func LoginUser(c *gin.Context) {
-  api.Handle(c, "LoginUser")
+	api.Handle(c, "LoginUser")
 }
 
 // LogoutUser - Logs out current logged in user session
 func LogoutUser(c *gin.Context) {
-  api.Handle(c, "LogoutUser")
+	api.Handle(c, "LogoutUser")
 }
 
 // UpdateUser - Updated user
 func UpdateUser(c *gin.Context) {
-  api.Handle(c, "UpdateUser")
+	api.Handle(c, "UpdateUser")
 }
